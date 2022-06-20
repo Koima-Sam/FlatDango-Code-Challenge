@@ -13,3 +13,10 @@ function fetchMovies(){
         });
     })
 }
+function displayMovie(movie){
+    const listHolder = document.getElementById('films')
+    const li = document.createElement('li')
+    li.innerHTML=`<li>${movie.title}</li>`
+    listHolder.appendChild(li)
+    console.log(li)
+}
