@@ -1,4 +1,5 @@
 // Your code here
+const listHolder = document.getElementById('films')
 document.addEventListener('DOMContentLoaded', ()=>{
     fetchMovies()
 })
@@ -13,10 +14,32 @@ function fetchMovies(){
         });
     })
 }
+
 function displayMovie(movie){
-    const listHolder = document.getElementById('films')
     const li = document.createElement('li')
+    li.style.cursor="pointer"
     li.innerHTML=`<li>${movie.title}</li>`
     listHolder.appendChild(li)
-    console.log(li)
+    addClickEvent()
+}
+function addClickEvent(){
+    let children=listHolder.children
+    // console.log(children)
+
+    for(let i=0; i<children.length; i++){
+        let child=children[i]
+        // console.log(child)
+    
+
+        child.addEventListener('click',() => {
+
+            fetch(`http://localhost:3000/films/${i + 1}`)
+
+            .then(res => res.json())
+            .then(movie => {
+                // setUpMovieDetails(movie)
+            })
+
+        })
+    }
 }
