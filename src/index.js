@@ -35,13 +35,54 @@ function addClickEvent(){
 
         child.addEventListener('click',() => {
 
-            fetch(`http://localhost:3000/films/${i + 1}`)
+            fetch(`http://localhost:3000/films/${i}`)
 
             .then(res => res.json())
             .then(movie => {
-                // setUpMovieDetails(movie)
+                setUpMovieDetails(movie)
             })
-
-        })
-    }
-}
+          })
+      }  
+  }
+  
+  
+  function setUpMovieDetails(movie) {
+  
+      const movieTitle = document.getElementById('title')
+      const movieRuntime = document.getElementById('runtime')
+      const movieDescription = document.getElementById('film-info')
+      const movieShowtime = document.getElementById('showtime')
+      const movieTickets = document.getElementById('ticket-num')
+      const moviePoster = document.getElementById('poster')
+  
+      let tickets = movie.capacity - movie.tickets_sold
+  
+      movieTitle.innerHTML = movie.title
+      movieRuntime.innerHTML = movie.runtime
+      movieDescription.innerHTML =  movie.description
+      movieShowtime.innerHTML = movie.showtime
+      movieTickets.innerHTML = tickets
+      moviePoster.setAttribute("src",movie.poster)
+      movieTickets.style.display="none"
+      showRemainingTickets(movieTickets);
+  }
+  
+  function showRemainingTickets(movieTickets){
+      const remainingTicketsButtton=document.getElementById('buy-ticket')
+      remainingTicketsButtton.addEventListener('click', ()=>{
+          movieTickets.style.display="block"
+  
+      })
+  
+      
+  }
+  const btn = document.getElementById('buy-ticket')
+          btn.addEventListener('click', function(){
+              let remTickets = document.querySelector('#ticket-num').textContent;
+              document.querySelector('#ticket-num').textContent  = remTickets-1
+              if( remTickets===0){
+                  return "no movies"
+              }
+              return 0
+          })
+  
