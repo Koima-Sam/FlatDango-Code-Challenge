@@ -37,9 +37,29 @@ function addClickEvent(){
 
             .then(res => res.json())
             .then(movie => {
-                // setUpMovieDetails(movie)
+                setUpMovieDetails(movie)
             })
 
         })
     }
 }
+function setUpMovieDetails(childMovie){
+    const preview = document.getElementById('poster')
+    preview.src = childMovie.poster;
+
+    const movieTitle = document.querySelector('#title');
+    movieTitle.textContent = childMovie.title;
+    const movieTime = document.querySelector('#runtime');
+    movieTime.textContent = childMovie.runtime;
+    const movieDescription = document.querySelector('#film-info');
+    movieDescription.textContent = childMovie.description;
+    const showTime = document.querySelector('#showtime')
+    showTime.textContent = childMovie.showtime;
+    const tickets  = document.querySelector('#ticket-num')
+    tickets.textContent = childMovie.tickets_sold;
+}
+const btn = document.getElementById('buy-ticket')
+        btn.addEventListener('click', function(){
+            let remTickets = document.querySelector('#ticket-num').textContent;
+            document.querySelector('#ticket-num').textContent  = remTickets-1
+        })
