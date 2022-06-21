@@ -33,7 +33,7 @@ function addClickEvent(){
 
         child.addEventListener('click',() => {
 
-            fetch(`http://localhost:3000/films/${i + 1}`)
+            fetch(`http://localhost:3000/films/${i}`)
 
             .then(res => res.json())
             .then(movie => {
