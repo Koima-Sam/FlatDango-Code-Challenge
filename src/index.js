@@ -22,6 +22,8 @@ function displayMovie(movie){
     listHolder.appendChild(li)
     addClickEvent()
 }
+
+
 function addClickEvent(){
     let children=listHolder.children
     // console.log(children)
