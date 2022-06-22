@@ -1,6 +1,7 @@
 // Your code here
 const listHolder = document.getElementById('films')
 document.addEventListener('DOMContentLoaded', ()=>{
+    document.getElementsByClassName('film item')[0].remove()
     fetchMovies()
 })
 
@@ -16,9 +17,10 @@ function fetchMovies(){
 }
 
 function displayMovie(movie){
+   
     const li = document.createElement('li')
     li.style.cursor="pointer"
-    li.innerHTML=`<li>${movie.title}</li>`
+    li.textContent= (movie.title).toUpperCase()
     listHolder.appendChild(li)
     addClickEvent()
 }
@@ -29,11 +31,10 @@ function addClickEvent(){
     for(let i=0; i<children.length; i++){
         let child=children[i]
         // console.log(child)
-    
 
         child.addEventListener('click',() => {
 
-            fetch(`http://localhost:3000/films/${i}`)
+            fetch(`http://localhost:3000/films/${i+1}`)
 
             .then(res => res.json())
             .then(movie => {
@@ -50,16 +51,19 @@ function setUpMovieDetails(childMovie){
     const movieTitle = document.querySelector('#title');
     movieTitle.textContent = childMovie.title;
     const movieTime = document.querySelector('#runtime');
-    movieTime.textContent = childMovie.runtime;
+    movieTime.textContent = `${childMovie.runtime} minutes`;
     const movieDescription = document.querySelector('#film-info');
     movieDescription.textContent = childMovie.description;
     const showTime = document.querySelector('#showtime')
     showTime.textContent = childMovie.showtime;
     const tickets  = document.querySelector('#ticket-num')
-    tickets.textContent = childMovie.tickets_sold;
+    tickets.textContent = childMovie.capacity -childMovie.tickets_sold;
 }
 const btn = document.getElementById('buy-ticket')
         btn.addEventListener('click', function(){
             let remTickets = document.querySelector('#ticket-num').textContent;
-            document.querySelector('#ticket-num').textContent  = remTickets-1
-        })
+            if(remTickets > 0){
+                document.querySelector('#ticket-num').textContent  = remTickets-1
+            }
+
+ })
