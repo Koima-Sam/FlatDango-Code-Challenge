@@ -1,13 +1,14 @@
 // Your code here
+let url = 'http://localhost:3000/films'
 const listHolder = document.getElementById('films')
 document.addEventListener('DOMContentLoaded', ()=>{
     document.getElementsByClassName('film item')[0].remove()
-    fetchMovies()
+    fetchMovies(url)
 })
 
 //Create fetch function
-function fetchMovies(){
-    fetch('http://localhost:3000/films')
+function fetchMovies(url){
+    fetch(url)
     .then(response => response.json())
     .then(movies => {
         movies.forEach(movie => {
@@ -33,11 +34,11 @@ function addClickEvent(){
         // console.log(child)
 
         child.addEventListener('click',() => {
-
-            fetch(`http://localhost:3000/films/${i+1}`)
+            fetch(`${url}/${i+1}`)
 
             .then(res => res.json())
             .then(movie => {
+                document.getElementById('buy-ticket').textContent = 'Buy Ticket'
                 setUpMovieDetails(movie)
             })
 
@@ -60,10 +61,15 @@ function setUpMovieDetails(childMovie){
     tickets.textContent = childMovie.capacity -childMovie.tickets_sold;
 }
 const btn = document.getElementById('buy-ticket')
-        btn.addEventListener('click', function(){
-            let remTickets = document.querySelector('#ticket-num').textContent;
+
+        btn.addEventListener('click', function(e){
+            let remTickets = document.querySelector('#ticket-num').textContent
+            e.preventDefault()
             if(remTickets > 0){
                 document.querySelector('#ticket-num').textContent  = remTickets-1
+                
             }
-
- })
+            else if(parseInt(remTickets, 10)===0){
+                btn.textContent = 'Sold Out'
+            }
+    })
